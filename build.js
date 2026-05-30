@@ -84,15 +84,19 @@ const allReviews = reviews.length     ? reviews       : defaultReviews;
 // ── HTML generators ───────────────────────────────────────────────────────
 
 function galleryHTML() {
+  // Assign random size classes in a repeating pattern so the grid feels organic
+  const patterns = ['tall', 'normal', 'normal', 'wide', 'normal', 'tall', 'normal', 'wide', 'normal', 'normal'];
   return gallery.map((item, i) => {
-    const wide     = item.featured === 'true' || item.featured === true;
-    const classes  = `gallery-item${wide ? ' wide' : ''}`;
+    const size = patterns[i % patterns.length];
     return `
-      <div class="${classes}">
-        <img class="gallery-img" src="${item.image}" alt="${item.title}"/>
-        <div class="gallery-overlay">
-          <div class="gallery-tag">${item.appliance} · ${item.brand}</div>
-          <div class="gallery-caption">${item.description}</div>
+      <div class="gal-item gal-${size}">
+        <div class="gal-img-wrap">
+          <img class="gal-img" src="${item.image}" alt="${item.title}"/>
+          <div class="gal-shine"></div>
+        </div>
+        <div class="gal-info">
+          <div class="gal-tag">${item.appliance} · ${item.brand}</div>
+          <div class="gal-desc">${item.description}</div>
         </div>
       </div>`;
   }).join('\n');
@@ -102,9 +106,11 @@ function servicesHTML() {
   return services.map((s, i) => `
     <div class="service-card">
       <img class="service-photo" src="${s.image}" alt="${s.title}"/>
-      <span class="service-num">0${i+1}</span>
-      <h3>${s.title}</h3>
-      <p>${s.description}</p>
+      <div class="service-card-body">
+        <span class="service-num">0${i+1}</span>
+        <h3>${s.title}</h3>
+        <p>${s.description}</p>
+      </div>
     </div>`).join('\n');
 }
 
@@ -189,18 +195,19 @@ h1 .o{-webkit-text-stroke:1px rgba(245,240,232,0.2);color:transparent;display:bl
 h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;letter-spacing:.02em;}
 .services-header{max-width:600px;margin-bottom:5rem;}
 .services-header p{margin-top:1.5rem;color:var(--muted);line-height:1.75;}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5px;border:1.5px solid var(--border);}
-.service-card{background:var(--card);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.22,1,.36,1);}
-.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-glow),transparent 60%);opacity:0;transition:opacity .4s;}
-.service-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;}
+.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+.service-card{background:var(--card);padding:0;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.22,1,.36,1);border:1px solid var(--border);}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-glow),transparent 60%);opacity:0;transition:opacity .4s;z-index:1;}
+.service-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;z-index:2;}
 .service-card:hover::before{opacity:1;}
 .service-card:hover::after{transform:scaleX(1);}
-.service-card:hover{transform:translateY(-4px);}
-.service-photo{width:100%;height:200px;object-fit:cover;object-position:center center;margin-bottom:1.8rem;filter:grayscale(30%);transition:filter .4s;display:block;}
-.service-card:hover .service-photo{filter:grayscale(0%);}
-.service-num{position:absolute;top:2rem;right:2.5rem;font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(255,255,255,0.04);line-height:1;}
-.service-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;}
-.service-card p{color:var(--muted);font-size:.9rem;line-height:1.7;}
+.service-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.service-photo{width:100%;height:220px;object-fit:cover;object-position:center center;display:block;filter:grayscale(30%);transition:filter .5s,transform .5s;}
+.service-card:hover .service-photo{filter:grayscale(0%);transform:scale(1.04);}
+.service-card-body{padding:1.8rem 2rem 2.2rem;position:relative;z-index:1;}
+.service-num{position:absolute;top:1rem;right:1.5rem;font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(255,255,255,0.04);line-height:1;}
+.service-card h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:600;margin-bottom:.8rem;}
+.service-card p{color:var(--muted);font-size:.88rem;line-height:1.7;}
 .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
 .why-visual{position:relative;height:480px;}
 .why-box{position:absolute;border:1px solid var(--border);}
@@ -218,28 +225,43 @@ h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-h
 .why-item-icon{width:32px;height:32px;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1rem;}
 .why-item-text h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:.3rem;}
 .why-item-text p{font-size:.85rem;color:var(--muted);}
-.appliances-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;margin-top:4rem;border:1px solid var(--border);}
-.appliance-tile{background:var(--card);padding:0;text-align:center;overflow:hidden;position:relative;}
-.appliance-tile::before{content:'';position:absolute;inset:0;background:var(--gold-glow);opacity:0;transition:opacity .3s;z-index:1;}
-.appliance-tile:hover::before{opacity:1;}
-.appliance-img{width:100%;height:140px;object-fit:cover;object-position:center center;display:block;filter:grayscale(40%) brightness(0.7);transition:filter .4s,transform .4s;}
-.appliance-tile:hover .appliance-img{filter:grayscale(0%) brightness(0.9);transform:scale(1.05);}
-.appliance-name{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.9rem .5rem;transition:color .3s;position:relative;z-index:2;}
-.appliance-tile:hover .appliance-name{color:var(--gold);}
-.brands-list{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:3rem;}
-.brand-badge{padding:.7rem 1.8rem;border:1px solid var(--border);font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:all .3s;background:var(--card);clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
-.brand-badge:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);transform:translateY(-2px);}
+.appliances-layout{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:4rem;}
+.appliances-col h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid var(--border);}
+.appliance-list{display:flex;flex-direction:column;gap:.6rem;}
+.appliance-row{display:flex;align-items:center;gap:1.2rem;padding:1rem 1.4rem;border:1px solid var(--border);background:var(--card);transition:border-color .3s,transform .3s,background .3s;}
+.appliance-row:hover{border-color:rgba(201,168,76,0.4);transform:translateX(5px);background:rgba(201,168,76,0.04);}
+.appliance-row-num{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:rgba(201,168,76,0.35);min-width:28px;}
+.appliance-row-name{font-size:.88rem;letter-spacing:.08em;text-transform:uppercase;color:var(--white);}
+.appliance-row-desc{margin-left:auto;font-size:.75rem;color:var(--muted);text-align:right;max-width:180px;line-height:1.4;}
+.brands-section{margin-top:5rem;}
+.brands-intro{color:var(--muted);line-height:1.8;margin-top:1rem;margin-bottom:3rem;max-width:700px;}
+.brands-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;border:1.5px solid var(--border);}
+.brand-card{background:var(--card);padding:1.8rem 1.5rem;position:relative;overflow:hidden;transition:background .3s,transform .3s;}
+.brand-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .4s;}
+.brand-card:hover{background:rgba(201,168,76,0.05);transform:translateY(-3px);}
+.brand-card:hover::after{transform:scaleX(1);}
+.brand-card-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.08em;color:var(--white);margin-bottom:.4rem;}
+.brand-card-origin{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);}
+.brand-card-desc{font-size:.78rem;color:var(--muted);line-height:1.6;margin-top:.6rem;}
+.brands-footer{margin-top:2rem;padding:1.5rem 2rem;border:1px solid rgba(201,168,76,0.2);background:rgba(201,168,76,0.04);display:flex;align-items:center;gap:1.5rem;}
+.brands-footer-icon{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);}
+.brands-footer p{color:var(--muted);font-size:.88rem;line-height:1.7;}
 .gallery-header{max-width:600px;margin-bottom:4rem;}
 .gallery-header p{margin-top:1.2rem;color:var(--muted);line-height:1.75;}
-.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
-.gallery-item{position:relative;overflow:hidden;aspect-ratio:4/3;}
-.gallery-item.wide{grid-column:span 2;}
-.gallery-img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;filter:grayscale(20%);transition:transform .6s cubic-bezier(.22,1,.36,1),filter .4s;}
-.gallery-item:hover .gallery-img{transform:scale(1.06);filter:grayscale(0%);}
-.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.92) 0%,rgba(8,8,8,0.4) 50%,transparent 100%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;}
-.gallery-item:hover .gallery-overlay{opacity:1;}
-.gallery-tag{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
-.gallery-caption{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--white);line-height:1.4;}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:240px;gap:3px;}
+.gal-item{overflow:hidden;display:flex;flex-direction:column;background:var(--card);}
+.gal-normal{grid-row:span 1;}
+.gal-tall{grid-row:span 2;}
+.gal-wide{grid-column:span 2;grid-row:span 1;}
+.gal-img-wrap{position:relative;overflow:hidden;flex:1;min-height:0;}
+.gal-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;filter:grayscale(15%);transition:transform .6s cubic-bezier(.22,1,.36,1),filter .5s;}
+.gal-shine{position:absolute;inset:0;background:linear-gradient(135deg,rgba(201,168,76,0.08) 0%,transparent 60%);opacity:0;transition:opacity .4s;}
+.gal-item:hover .gal-img{transform:scale(1.07);filter:grayscale(0%);}
+.gal-item:hover .gal-shine{opacity:1;}
+.gal-info{padding:.9rem 1.1rem 1.1rem;border-top:1px solid var(--border);background:var(--card);transform:translateY(4px);opacity:0;transition:opacity .35s,transform .35s;}
+.gal-item:hover .gal-info{opacity:1;transform:translateY(0);}
+.gal-tag{font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.35rem;}
+.gal-desc{font-family:'Cormorant Garamond',serif;font-size:.95rem;font-style:italic;color:var(--white);line-height:1.5;}
 .reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:4rem;border:1.5px solid var(--border);}
 .review-card{background:var(--card);padding:2.5rem;position:relative;overflow:hidden;transition:background .3s;}
 .review-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:8rem;line-height:.7;color:rgba(201,168,76,0.07);position:absolute;top:1rem;right:1.5rem;pointer-events:none;}
@@ -286,7 +308,7 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;align-items:
 .stagger.visible>*:nth-child(4){opacity:1;transform:none;transition-delay:.35s;}
 .stagger.visible>*:nth-child(5){opacity:1;transform:none;transition-delay:.45s;}
 .stagger.visible>*:nth-child(6){opacity:1;transform:none;transition-delay:.55s;}
-@media(max-width:900px){nav{padding:1.2rem 1.5rem;}.nav-links{display:none;}#hero{padding:0 1.5rem;}.hero-stats{display:none;}.t-section{padding:4rem 1.5rem;}.why-grid{grid-template-columns:1fr;}.why-visual{display:none;}.contact-grid{grid-template-columns:1fr;}.reviews-grid{grid-template-columns:1fr;}.appliances-grid{grid-template-columns:repeat(3,1fr);}.gallery-grid{grid-template-columns:1fr 1fr;}.gallery-item.wide{grid-column:span 1;}footer{flex-direction:column;gap:1.5rem;text-align:center;}.tab-btn{min-width:100px;font-size:.68rem;padding:1rem;}.about-grid{grid-template-columns:1fr!important;}.values-grid{grid-template-columns:1fr!important;}}
+@media(max-width:900px){nav{padding:1.2rem 1.5rem;}.nav-links{display:none;}#hero{padding:0 1.5rem;}.hero-stats{display:none;}.t-section{padding:4rem 1.5rem;}.why-grid{grid-template-columns:1fr;}.why-visual{display:none;}.contact-grid{grid-template-columns:1fr;}.reviews-grid{grid-template-columns:1fr;}.services-grid{grid-template-columns:repeat(2,1fr);gap:1.2rem;}.appliances-layout{grid-template-columns:1fr;gap:3rem;}.brands-grid{grid-template-columns:repeat(2,1fr);}.gal-grid{grid-template-columns:1fr 1fr;grid-auto-rows:180px;}.gal-wide{grid-column:span 2;}.gal-tall{grid-row:span 1;}footer{flex-direction:column;gap:1.5rem;text-align:center;}.tab-btn{min-width:100px;font-size:.68rem;padding:1rem;}.about-grid{grid-template-columns:1fr!important;}.values-grid{grid-template-columns:1fr!important;}}
 </style>
 </head>
 <body>
@@ -374,21 +396,109 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;align-items:
 
   <div class="tab-panel" id="tab-appliances">
     <div class="t-section dark">
-      <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 1rem;">
-        <div class="section-label" style="justify-content:center;">What Ali Fixes</div>
-        <h2>All The Essentials</h2>
+      <div class="reveal">
+        <div class="section-label">What Ali Fixes</div>
+        <h2>Appliances &amp; Brands</h2>
       </div>
-      <div class="appliances-grid stagger">
-        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Washer"/><div class="appliance-name">Washer</div></div>
-        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=400&q=80" alt="Dryer"/><div class="appliance-name">Dryer</div></div>
-        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=80" alt="Refrigerator"/><div class="appliance-name">Refrigerator</div></div>
-        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Dishwasher"/><div class="appliance-name">Dishwasher</div></div>
-        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80" alt="Oven"/><div class="appliance-name">Oven</div></div>
-        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&q=80" alt="Freezer"/><div class="appliance-name">Freezer</div></div>
+
+      <div class="appliances-layout">
+        <div class="appliances-col reveal-left">
+          <h3>Appliances Ali Services</h3>
+          <div class="appliance-list stagger">
+            <div class="appliance-row"><span class="appliance-row-num">01</span><span class="appliance-row-name">Washer</span><span class="appliance-row-desc">Top-load &amp; front-load, all cycles</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">02</span><span class="appliance-row-name">Dryer</span><span class="appliance-row-desc">Gas &amp; electric, all venting types</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">03</span><span class="appliance-row-name">Refrigerator</span><span class="appliance-row-desc">French door, side-by-side, top &amp; bottom freezer</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">04</span><span class="appliance-row-name">Dishwasher</span><span class="appliance-row-desc">Built-in &amp; portable units</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">05</span><span class="appliance-row-name">Oven &amp; Range</span><span class="appliance-row-desc">Gas, electric &amp; dual-fuel</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">06</span><span class="appliance-row-name">Freezer</span><span class="appliance-row-desc">Chest &amp; upright freezers</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">07</span><span class="appliance-row-name">Microwave</span><span class="appliance-row-desc">Over-range &amp; countertop</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">08</span><span class="appliance-row-name">Ice Maker</span><span class="appliance-row-desc">Built-in &amp; standalone units</span></div>
+          </div>
+        </div>
+
+        <div class="appliances-col reveal-right">
+          <h3>Types of Service</h3>
+          <div class="appliance-list stagger">
+            <div class="appliance-row"><span class="appliance-row-num">—</span><span class="appliance-row-name">Diagnostic &amp; Repair</span><span class="appliance-row-desc">Find the problem, fix it same visit</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">—</span><span class="appliance-row-name">Parts Replacement</span><span class="appliance-row-desc">Motors, pumps, heating elements &amp; more</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">—</span><span class="appliance-row-name">New Appliance Installation</span><span class="appliance-row-desc">Hookups, leveling, test runs</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">—</span><span class="appliance-row-name">Preventive Maintenance</span><span class="appliance-row-desc">Cleaning, inspections, tune-ups</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">—</span><span class="appliance-row-name">Emergency Repair</span><span class="appliance-row-desc">Same-day response when available</span></div>
+            <div class="appliance-row"><span class="appliance-row-num">—</span><span class="appliance-row-name">In-Home Only</span><span class="appliance-row-desc">Ali comes to you — no hauling required</span></div>
+          </div>
+        </div>
       </div>
-      <div class="reveal" style="text-align:center;max-width:500px;margin:5rem auto 1rem;"><div class="section-label" style="justify-content:center;">Brands Ali Services</div></div>
-      <div class="brands-list stagger">
-        <div class="brand-badge">Samsung</div><div class="brand-badge">LG</div><div class="brand-badge">Whirlpool</div><div class="brand-badge">GE</div><div class="brand-badge">Maytag</div><div class="brand-badge">Bosch</div><div class="brand-badge">KitchenAid</div><div class="brand-badge">Electrolux</div><div class="brand-badge">Frigidaire</div><div class="brand-badge">Kenmore</div><div class="brand-badge">Amana</div><div class="brand-badge">Haier</div><div class="brand-badge">Speed Queen</div><div class="brand-badge">+ All Others</div>
+
+      <div class="brands-section reveal">
+        <div class="section-label">Brands Ali Works With</div>
+        <h2>Every Major Manufacturer</h2>
+        <p class="brands-intro">Ali has hands-on experience with all the leading appliance manufacturers — from budget-friendly everyday brands to premium European and Korean manufacturers. If it's in your home, Ali can fix it.</p>
+        <div class="brands-grid stagger">
+          <div class="brand-card">
+            <div class="brand-card-name">Samsung</div>
+            <div class="brand-card-origin">South Korea</div>
+            <div class="brand-card-desc">Washers, dryers, refrigerators, dishwashers &amp; ranges</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">LG</div>
+            <div class="brand-card-origin">South Korea</div>
+            <div class="brand-card-desc">Full appliance lineup including ThinQ smart appliances</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Whirlpool</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">America's most popular appliance brand — all models</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">GE</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">General Electric appliances including GE Profile series</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Maytag</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">Heavy-duty washers, dryers &amp; dishwashers</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Bosch</div>
+            <div class="brand-card-origin">Germany</div>
+            <div class="brand-card-desc">Premium European dishwashers, washers &amp; refrigerators</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">KitchenAid</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">Refrigerators, dishwashers &amp; cooking appliances</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Frigidaire</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">Refrigerators, freezers, washers &amp; ranges</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Electrolux</div>
+            <div class="brand-card-origin">Sweden</div>
+            <div class="brand-card-desc">Premium washers, dryers &amp; kitchen appliances</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Kenmore</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">Full range of home appliances — all generations</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Speed Queen</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">Commercial-grade washers &amp; dryers for home use</div>
+          </div>
+          <div class="brand-card">
+            <div class="brand-card-name">Amana</div>
+            <div class="brand-card-origin">USA</div>
+            <div class="brand-card-desc">Reliable everyday refrigerators, washers &amp; ranges</div>
+          </div>
+        </div>
+        <div class="brands-footer">
+          <div class="brands-footer-icon">+</div>
+          <p>Don't see your brand listed? Ali services all appliance manufacturers. If it's in your home, give him a call — chances are he's worked on it before.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -398,9 +508,9 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;align-items:
       <div class="gallery-header reveal">
         <div class="section-label">Real Jobs</div>
         <h2>Work Done Right</h2>
-        <p>A look at repairs and installations Ali has completed for customers in the San Antonio area. Every job gets the same attention — no matter the appliance or the brand.</p>
+        <p>A look at repairs and installations Ali has completed for customers in the San Antonio area. Hover over any photo to see what was done.</p>
       </div>
-      <div class="gallery-grid">${galleryHTML()}</div>
+      <div class="gal-grid">${galleryHTML()}</div>
     </div>
   </div>
 
@@ -514,7 +624,7 @@ const cursor=document.getElementById('cursor'),ring=document.getElementById('cur
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 (function a(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
-document.querySelectorAll('a,button,.service-card,.appliance-tile,.brand-badge,.gallery-item,.why-item,.review-card,.contact-item').forEach(el=>{
+document.querySelectorAll('a,button,.service-card,.appliance-row,.brand-card,.gal-item,.why-item,.review-card,.contact-item').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cursor.style.width='16px';cursor.style.height='16px';ring.style.width='52px';ring.style.height='52px';});
   el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px';});
 });
