@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Jaafar Appliances — Admin Panel</title>
-  <!-- Netlify Identity Widget — MUST load before Decap CMS -->
+  <title>Jaafar Appliances — Admin</title>
+  <!-- Step 1: Netlify Identity Widget (must come first) -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <!-- Decap CMS -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </head>
 <body>
+  <!-- Step 2: Decap CMS — pinned to stable 3.3.3, loaded from jsDelivr CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/decap-cms@3.3.3/dist/decap-cms.js"></script>
+
+  <!-- Step 3: After login redirect back to /admin/ -->
   <script>
-    // After login, redirect back to /admin instead of /
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
+      window.netlifyIdentity.on("init", function(user) {
         if (!user) {
-          window.netlifyIdentity.on("login", () => {
+          window.netlifyIdentity.on("login", function() {
             document.location.href = "/admin/";
           });
         }

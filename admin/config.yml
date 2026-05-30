@@ -5,9 +5,6 @@ backend:
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-# Allow editorial workflow so Ali can save drafts
-publish_mode: editorial_workflow
-
 collections:
 
   # ── GALLERY (Our Work photos) ─────────────────────────────────────────────
