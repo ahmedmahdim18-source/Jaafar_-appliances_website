@@ -493,6 +493,22 @@ footer{border-top:1px solid var(--border);padding:3rem;display:flex;align-items:
   </ul>
 </footer>
 
+<!-- Netlify Identity: catches password-reset & invite links on the main site -->
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script>
+  // If someone lands on the homepage with a Netlify Identity token in the URL
+  // (e.g. after clicking a password-reset or invite email link), send them
+  // straight to the admin panel where the token can be consumed properly.
+  if (window.location.hash && window.location.hash.includes('invite_token')) {
+    window.location.href = '/admin/#' + window.location.hash.substring(1);
+  }
+  if (window.location.hash && window.location.hash.includes('recovery_token')) {
+    window.location.href = '/admin/#' + window.location.hash.substring(1);
+  }
+  if (window.location.hash && window.location.hash.includes('confirmation_token')) {
+    window.location.href = '/admin/#' + window.location.hash.substring(1);
+  }
+</script>
 <script>
 const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 let mx=0,my=0,rx=0,ry=0;
