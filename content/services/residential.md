@@ -1,6 +1,8 @@
 ---
-title: "Residential Appliance Repair"
-icon: "🏠"
-description: "Professional in-home repair service for all major appliances. Same-day service available."
+title: Washer Repair
+icon: 🏠
+image: /uploads/washerpic.jpeg
+description: Not draning, won't spin, or making noise? Ali diagnoses and fixes
+  all washer issues quickly so laundry day gets back on track.
 order: 1
 ---
