@@ -1,0 +1,70 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# Allow editorial workflow so Ali can save drafts
+publish_mode: editorial_workflow
+
+collections:
+
+  # ── GALLERY (Our Work photos) ─────────────────────────────────────────────
+  - name: "gallery"
+    label: "Our Work — Photos"
+    label_singular: "Photo"
+    folder: "content/gallery"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    summary: "{{title}} — {{appliance}}"
+    fields:
+      - { label: "Job Title", name: "title", widget: "string", hint: "e.g. Samsung Washer Repair" }
+      - { label: "Photo", name: "image", widget: "image", hint: "Upload the job photo here" }
+      - { label: "Appliance Type", name: "appliance", widget: "select", options: ["Washer", "Dryer", "Refrigerator", "Dishwasher", "Oven", "Freezer", "Installation", "Other"] }
+      - { label: "Brand", name: "brand", widget: "string", hint: "e.g. Samsung, LG, Whirlpool" }
+      - { label: "Short Description", name: "description", widget: "text", hint: "1-2 sentences describing what was done. This shows when someone hovers over the photo." }
+      - { label: "Display Order", name: "order", widget: "number", default: 1, hint: "Lower numbers show first" }
+      - { label: "Featured (shows larger)", name: "featured", widget: "boolean", default: false, hint: "Turn on to make this photo display larger in the grid" }
+
+  # ── SERVICES ─────────────────────────────────────────────────────────────
+  - name: "services"
+    label: "Services"
+    label_singular: "Service"
+    folder: "content/services"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Service Name", name: "title", widget: "string" }
+      - { label: "Photo", name: "image", widget: "image" }
+      - { label: "Description", name: "description", widget: "text", hint: "2-3 sentences describing this service" }
+      - { label: "Display Order", name: "order", widget: "number", default: 1 }
+
+  # ── SITE SETTINGS ─────────────────────────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - label: "Contact & Business Info"
+        name: "contact"
+        file: "content/settings/contact.json"
+        fields:
+          - { label: "Phone Number", name: "phone", widget: "string", hint: "e.g. (701) 730-0184" }
+          - { label: "Phone Number (digits only for links)", name: "phone_raw", widget: "string", hint: "e.g. 7017300184" }
+          - { label: "Service Area", name: "service_area", widget: "string", hint: "e.g. San Antonio, TX & Surrounding Areas" }
+          - { label: "Years of Experience", name: "experience", widget: "string", hint: "e.g. 10+" }
+
+      - label: "Reviews"
+        name: "reviews"
+        file: "content/settings/reviews.json"
+        fields:
+          - label: "Google Reviews"
+            name: "reviews"
+            widget: "list"
+            summary: "{{fields.author}}"
+            fields:
+              - { label: "Customer Name", name: "author", widget: "string" }
+              - { label: "Review Text", name: "text", widget: "text" }
+              - { label: "Date", name: "date", widget: "string", hint: "e.g. 9 months ago" }
+              - { label: "Extra Info", name: "badge", widget: "string", required: false, hint: "e.g. Local Guide (optional)" }

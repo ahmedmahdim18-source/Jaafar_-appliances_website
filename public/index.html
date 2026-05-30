@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jaafar Appliances — Expert In-Home Repair · San Antonio, TX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--black:#080808;--deep:#0d0d0d;--card:#111111;--border:rgba(255,255,255,0.07);--gold:#c9a84c;--gold-light:#e8c97a;--gold-glow:rgba(201,168,76,0.15);--white:#f5f0e8;--muted:rgba(245,240,232,0.5);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
+#cursor{position:fixed;width:10px;height:10px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1.5px solid rgba(201,168,76,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s;}
+body::before{content:'';position:fixed;inset:0;z-index:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");background-size:200px;pointer-events:none;opacity:.5;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;border-bottom:1px solid transparent;transition:background .4s,border-color .4s,padding .4s;}
+nav.scrolled{background:rgba(8,8,8,0.93);backdrop-filter:blur(20px);border-color:var(--border);padding:1rem 3rem;}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.1em;color:var(--white);text-decoration:none;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:2.4rem;list-style:none;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;position:relative;transition:color .3s;}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s;}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:var(--gold);color:var(--black);padding:.55rem 1.4rem;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;transition:background .3s,transform .2s;clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);}
+.nav-cta:hover{background:var(--gold-light);transform:translateY(-1px);}
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:0 3rem;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 70% 50%,rgba(201,168,76,0.06) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 80%,rgba(58,143,212,0.04) 0%,transparent 60%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.02) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 80%);}
+.hero-content{position:relative;z-index:2;max-width:900px;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.8rem;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;opacity:0;transform:translateY(20px);animation:fadeUp .8s .3s forwards;}
+.hero-eyebrow::before{content:'';display:block;width:32px;height:1px;background:var(--gold);}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(4.5rem,10vw,9rem);line-height:.92;letter-spacing:.02em;opacity:0;transform:translateY(40px);animation:fadeUp .9s .5s forwards;}
+h1 .g{color:var(--gold);display:block;}
+h1 .o{-webkit-text-stroke:1px rgba(245,240,232,0.2);color:transparent;display:block;}
+.hero-sub{margin-top:2rem;font-size:1.05rem;color:var(--muted);max-width:480px;line-height:1.7;opacity:0;transform:translateY(20px);animation:fadeUp .8s .8s forwards;}
+.hero-actions{margin-top:3rem;display:flex;gap:1.2rem;align-items:center;opacity:0;transform:translateY(20px);animation:fadeUp .8s 1s forwards;}
+.btn-primary{background:var(--gold);color:var(--black);padding:.9rem 2.4rem;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:.6rem;transition:background .3s,transform .2s,box-shadow .3s;clip-path:polygon(10px 0%,100% 0%,calc(100% - 10px) 100%,0% 100%);}
+.btn-primary:hover{background:var(--gold-light);box-shadow:0 0 40px rgba(201,168,76,0.3);transform:translateY(-2px);}
+.btn-ghost{color:var(--white);text-decoration:none;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .3s,border-color .3s;}
+.btn-ghost:hover{color:var(--gold);border-color:var(--gold);}
+.hero-stats{position:absolute;right:3rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:2rem;z-index:2;opacity:0;animation:fadeIn 1s 1.2s forwards;}
+.stat-num{font-family:'Bebas Neue',sans-serif;font-size:3.2rem;line-height:1;color:var(--gold);}
+.stat-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;}
+.stat-divider{width:1px;height:40px;background:var(--border);margin:0 auto;}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.6rem;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);z-index:2;opacity:0;animation:fadeIn 1s 1.5s forwards;}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollPulse 1.8s ease-in-out infinite;}
+.marquee-wrap{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.2rem 0;background:rgba(201,168,76,0.03);}
+.marquee-track{display:flex;gap:3rem;width:max-content;animation:marquee 28s linear infinite;}
+.marquee-item{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.15em;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:3rem;}
+.marquee-item::after{content:'·';color:var(--gold);font-size:1.4rem;}
+#main-tabs{position:relative;z-index:1;}
+.tab-nav{position:sticky;top:62px;z-index:50;background:rgba(8,8,8,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;}
+.tab-nav::-webkit-scrollbar{display:none;}
+.tab-btn{flex:1;min-width:120px;padding:1.3rem 1.5rem;font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:none;transition:color .3s,border-color .3s;white-space:nowrap;font-family:'DM Sans',sans-serif;}
+.tab-btn:hover{color:var(--white);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+.t-section{padding:7rem 3rem;}
+.t-section.dark{background:var(--deep);}
+.section-label{font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;display:flex;align-items:center;gap:.8rem;}
+.section-label::before{content:'';display:block;width:24px;height:1px;background:var(--gold);}
+h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-height:1;letter-spacing:.02em;}
+.services-header{max-width:600px;margin-bottom:5rem;}
+.services-header p{margin-top:1.5rem;color:var(--muted);line-height:1.75;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5px;border:1.5px solid var(--border);}
+.service-card{background:var(--card);padding:3rem 2.5rem;position:relative;overflow:hidden;transition:transform .4s cubic-bezier(.22,1,.36,1);}
+.service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--gold-glow),transparent 60%);opacity:0;transition:opacity .4s;}
+.service-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);transform:scaleX(0);transition:transform .4s;}
+.service-card:hover::before{opacity:1;}
+.service-card:hover::after{transform:scaleX(1);}
+.service-card:hover{transform:translateY(-4px);}
+.service-photo{width:100%;height:160px;object-fit:cover;margin-bottom:1.8rem;filter:grayscale(30%);transition:filter .4s;}
+.service-card:hover .service-photo{filter:grayscale(0%);}
+.service-num{position:absolute;top:2rem;right:2.5rem;font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(255,255,255,0.04);line-height:1;}
+.service-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;}
+.service-card p{color:var(--muted);font-size:.9rem;line-height:1.7;}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.why-visual{position:relative;height:480px;}
+.why-box{position:absolute;border:1px solid var(--border);}
+.why-box-1{top:0;left:0;right:15%;bottom:15%;background:linear-gradient(135deg,var(--card),var(--deep));}
+.why-box-2{top:20%;left:20%;right:-5%;bottom:-5%;background:var(--card);border-color:rgba(201,168,76,0.2);}
+.why-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:10;text-align:center;background:var(--black);border:1px solid var(--gold);padding:2.5rem 3rem;animation:glow-pulse 3s ease-in-out infinite;}
+.why-center-num{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;color:var(--gold);line-height:1;}
+.why-stars{color:var(--gold);font-size:1.1rem;margin:.4rem 0;}
+.why-center-label{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.why-content h2{margin-bottom:1.5rem;}
+.why-content>p{color:var(--muted);line-height:1.8;margin-bottom:2rem;}
+.why-list{display:flex;flex-direction:column;gap:1.2rem;}
+.why-item{display:flex;gap:1.2rem;align-items:flex-start;padding:1.2rem 1.5rem;border:1px solid var(--border);background:var(--card);transition:border-color .3s,transform .3s;}
+.why-item:hover{border-color:rgba(201,168,76,0.4);transform:translateX(4px);}
+.why-item-icon{width:32px;height:32px;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1rem;}
+.why-item-text h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:.3rem;}
+.why-item-text p{font-size:.85rem;color:var(--muted);}
+.appliances-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;margin-top:4rem;border:1px solid var(--border);}
+.appliance-tile{background:var(--card);padding:0;text-align:center;overflow:hidden;position:relative;}
+.appliance-tile::before{content:'';position:absolute;inset:0;background:var(--gold-glow);opacity:0;transition:opacity .3s;z-index:1;}
+.appliance-tile:hover::before{opacity:1;}
+.appliance-img{width:100%;height:140px;object-fit:cover;display:block;filter:grayscale(40%) brightness(0.7);transition:filter .4s,transform .4s;}
+.appliance-tile:hover .appliance-img{filter:grayscale(0%) brightness(0.9);transform:scale(1.05);}
+.appliance-name{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.9rem .5rem;transition:color .3s;position:relative;z-index:2;}
+.appliance-tile:hover .appliance-name{color:var(--gold);}
+.brands-list{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-top:3rem;}
+.brand-badge{padding:.7rem 1.8rem;border:1px solid var(--border);font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);transition:all .3s;background:var(--card);clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.brand-badge:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);transform:translateY(-2px);}
+.gallery-header{max-width:600px;margin-bottom:4rem;}
+.gallery-header p{margin-top:1.2rem;color:var(--muted);line-height:1.75;}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.gallery-item{position:relative;overflow:hidden;aspect-ratio:4/3;}
+.gallery-item.wide{grid-column:span 2;}
+.gallery-img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(20%);transition:transform .6s cubic-bezier(.22,1,.36,1),filter .4s;}
+.gallery-item:hover .gallery-img{transform:scale(1.06);filter:grayscale(0%);}
+.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.92) 0%,rgba(8,8,8,0.4) 50%,transparent 100%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;}
+.gallery-item:hover .gallery-overlay{opacity:1;}
+.gallery-tag{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.gallery-caption{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--white);line-height:1.4;}
+.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:4rem;border:1.5px solid var(--border);}
+.review-card{background:var(--card);padding:2.5rem;position:relative;overflow:hidden;transition:background .3s;}
+.review-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:8rem;line-height:.7;color:rgba(201,168,76,0.07);position:absolute;top:1rem;right:1.5rem;pointer-events:none;}
+.review-card:hover{background:rgba(201,168,76,0.04);}
+.review-stars{color:var(--gold);font-size:1rem;margin-bottom:1.2rem;letter-spacing:.2em;}
+.review-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;line-height:1.6;color:var(--white);margin-bottom:1.5rem;}
+.review-author{font-size:.82rem;font-weight:500;color:var(--white);}
+.review-date{margin-top:.3rem;font-size:.68rem;color:var(--muted);letter-spacing:.08em;}
+.review-platform{margin-top:.4rem;font-size:.68rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.contact-item{display:flex;gap:1.2rem;align-items:center;padding:1.4rem 1.8rem;border:1px solid var(--border);background:var(--card);text-decoration:none;color:var(--white);transition:all .3s;margin-bottom:1rem;}
+.contact-item:hover{border-color:var(--gold);transform:translateX(4px);background:var(--gold-glow);}
+.contact-item-icon{width:36px;height:36px;border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.contact-item-icon svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.contact-item-label{font-size:.68rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);}
+.contact-item-value{font-size:.95rem;margin-top:.2rem;}
+.call-cta{background:var(--gold);color:var(--black);display:flex;align-items:center;gap:1.2rem;padding:2rem 2.5rem;text-decoration:none;transition:background .3s,box-shadow .3s,transform .2s;margin-top:2rem;clip-path:polygon(12px 0%,100% 0%,calc(100% - 12px) 100%,0% 100%);}
+.call-cta:hover{background:var(--gold-light);box-shadow:0 0 50px rgba(201,168,76,0.3);transform:translateY(-2px);}
+.call-cta-label{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(8,8,8,0.7);}
+.call-cta-num{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--black);letter-spacing:.05em;line-height:1;margin-top:.2rem;}
+.call-icon svg{width:40px;height:40px;stroke:var(--black);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+footer{border-top:1px solid var(--border);padding:3rem;display:flex;align-items:center;justify-content:space-between;background:var(--black);}
+.footer-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.1em;color:var(--white);}
+.footer-logo span{color:var(--gold);}
+.footer-copy{font-size:.75rem;color:var(--muted);}
+.footer-links{display:flex;gap:2rem;list-style:none;}
+.footer-links a{font-size:.75rem;color:var(--muted);text-decoration:none;letter-spacing:.08em;transition:color .3s;}
+.footer-links a:hover{color:var(--gold);}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{to{opacity:1;}}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@keyframes scrollPulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+@keyframes glow-pulse{0%,100%{box-shadow:0 0 30px rgba(201,168,76,0.12);}50%{box-shadow:0 0 60px rgba(201,168,76,0.3);}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{opacity:0;transform:translateX(40px);transition:opacity .8s cubic-bezier(.22,1,.36,1),transform .8s cubic-bezier(.22,1,.36,1);}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+.stagger>*{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s;}
+.stagger.visible>*:nth-child(1){opacity:1;transform:none;transition-delay:.05s;}
+.stagger.visible>*:nth-child(2){opacity:1;transform:none;transition-delay:.15s;}
+.stagger.visible>*:nth-child(3){opacity:1;transform:none;transition-delay:.25s;}
+.stagger.visible>*:nth-child(4){opacity:1;transform:none;transition-delay:.35s;}
+.stagger.visible>*:nth-child(5){opacity:1;transform:none;transition-delay:.45s;}
+.stagger.visible>*:nth-child(6){opacity:1;transform:none;transition-delay:.55s;}
+@media(max-width:900px){nav{padding:1.2rem 1.5rem;}.nav-links{display:none;}#hero{padding:0 1.5rem;}.hero-stats{display:none;}.t-section{padding:4rem 1.5rem;}.why-grid{grid-template-columns:1fr;}.why-visual{display:none;}.contact-grid{grid-template-columns:1fr;}.reviews-grid{grid-template-columns:1fr;}.appliances-grid{grid-template-columns:repeat(3,1fr);}.gallery-grid{grid-template-columns:1fr 1fr;}.gallery-item.wide{grid-column:span 1;}footer{flex-direction:column;gap:1.5rem;text-align:center;}.tab-btn{min-width:100px;font-size:.68rem;padding:1rem;}.about-grid{grid-template-columns:1fr!important;}.values-grid{grid-template-columns:1fr!important;}}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">Jaafar<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="switchTab('services',event)">Services</a></li>
+    <li><a href="#" onclick="switchTab('work',event)">Our Work</a></li>
+    <li><a href="#" onclick="switchTab('about',event)">About</a></li>
+    <li><a href="#" onclick="switchTab('contact',event)">Contact</a></li>
+  </ul>
+  <a href="tel:7017300184" class="nav-cta">Call Now</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">San Antonio, Texas · Serving All Brands</div>
+    <h1>Expert<br><span class="g">Appliance</span><span class="o">Repair</span></h1>
+    <p class="hero-sub">Ali comes directly to your home to fix what's broken — fast, honest, and at a fair price. Satisfaction guaranteed on every job.</p>
+    <div class="hero-actions">
+      <a href="tel:7017300184" class="btn-primary">Call (701) 730-0184</a>
+      <a href="#" onclick="switchTab('services',event)" class="btn-ghost">See Services</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">5.0</div><div style="color:var(--gold);letter-spacing:.15em;">★★★★★</div><div class="stat-label">Google Rating</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-num">14+</div><div class="stat-label">Reviews</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Yrs Experience</div></div>
+  </div>
+  <div class="scroll-hint"><span>Explore</span><div class="scroll-line"></div></div>
+</section>
+
+<div class="marquee-wrap"><div class="marquee-track">
+  <span class="marquee-item">Washer Repair</span><span class="marquee-item">Dryer Repair</span><span class="marquee-item">Refrigerator Repair</span><span class="marquee-item">Dishwasher Repair</span><span class="marquee-item">Professional Installation</span><span class="marquee-item">All Brands</span><span class="marquee-item">San Antonio TX</span><span class="marquee-item">5.0 Stars</span>
+  <span class="marquee-item">Washer Repair</span><span class="marquee-item">Dryer Repair</span><span class="marquee-item">Refrigerator Repair</span><span class="marquee-item">Dishwasher Repair</span><span class="marquee-item">Professional Installation</span><span class="marquee-item">All Brands</span><span class="marquee-item">San Antonio TX</span><span class="marquee-item">5.0 Stars</span>
+</div></div>
+
+<div id="main-tabs">
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('services',event)" data-tab="services">Services</button>
+    <button class="tab-btn" onclick="switchTab('appliances',event)" data-tab="appliances">Appliances</button>
+    <button class="tab-btn" onclick="switchTab('work',event)" data-tab="work">Our Work</button>
+    <button class="tab-btn" onclick="switchTab('about',event)" data-tab="about">About</button>
+    <button class="tab-btn" onclick="switchTab('reviews',event)" data-tab="reviews">Reviews</button>
+    <button class="tab-btn" onclick="switchTab('contact',event)" data-tab="contact">Contact</button>
+  </div>
+
+  <div class="tab-panel active" id="tab-services">
+    <div class="t-section dark">
+      <div class="services-header reveal">
+        <div class="section-label">What Ali Does</div>
+        <h2>Expert Solutions<br>For Every Appliance</h2>
+        <p>Ali comes directly to your home — no hauling, no waiting. He diagnoses and fixes the problem on the spot, with a clear price before any work starts.</p>
+      </div>
+      <div class="services-grid stagger">
+    <div class="service-card">
+      <img class="service-photo" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Washer Repair"/>
+      <span class="service-num">01</span>
+      <h3>Washer Repair</h3>
+      <p>Not draining, won't spin, or making noise? Ali diagnoses and fixes all washer issues quickly so laundry day gets back on track.</p>
+    </div>
+
+    <div class="service-card">
+      <img class="service-photo" src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=600&q=80" alt="Dryer Repair"/>
+      <span class="service-num">02</span>
+      <h3>Dryer Repair</h3>
+      <p>Dryer not heating, taking too long, or not starting? Ali will have it running efficiently again — often the same day.</p>
+    </div>
+
+    <div class="service-card">
+      <img class="service-photo" src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&q=80" alt="Refrigerator Repair"/>
+      <span class="service-num">03</span>
+      <h3>Refrigerator Repair</h3>
+      <p>From not cooling to strange sounds or leaking — Ali handles all refrigerator repairs to keep your food safe and fresh.</p>
+    </div>
+
+    <div class="service-card">
+      <img class="service-photo" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Dishwasher Repair"/>
+      <span class="service-num">04</span>
+      <h3>Dishwasher Repair</h3>
+      <p>Not cleaning properly, not draining, or leaving spots? Ali will restore your dishwasher to full performance.</p>
+    </div>
+
+    <div class="service-card">
+      <img class="service-photo" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=600&q=80" alt="Installation"/>
+      <span class="service-num">05</span>
+      <h3>Installation</h3>
+      <p>Just bought a new appliance? Ali handles professional installation for washers, dryers, dishwashers, and more.</p>
+    </div>
+
+    <div class="service-card">
+      <img class="service-photo" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80" alt="In-Home Service"/>
+      <span class="service-num">06</span>
+      <h3>In-Home Service</h3>
+      <p>Ali comes to you anywhere in the San Antonio area. No hauling required — he brings everything needed to your door.</p>
+    </div></div>
+    </div>
+    <div class="t-section">
+      <div class="why-grid">
+        <div class="why-visual reveal-left">
+          <div class="why-box why-box-1"></div>
+          <div class="why-box why-box-2"></div>
+          <div class="why-center"><div class="why-center-num">5.0</div><div class="why-stars">★★★★★</div><div class="why-center-label">Google Reviews</div></div>
+        </div>
+        <div class="why-content reveal-right">
+          <div class="section-label">Why Choose Ali</div>
+          <h2>The Right Fix.<br>The First Time.</h2>
+          <p>Ali has built a reputation in San Antonio for honest, fast, and effective appliance repair. He doesn't cut corners — the job is done right so you're not calling back for the same issue.</p>
+          <div class="why-list stagger">
+            <div class="why-item"><div class="why-item-icon">01</div><div class="why-item-text"><h4>Fast, Efficient Service</h4><p>Ali respects your time. Most repairs are completed in a single visit.</p></div></div>
+            <div class="why-item"><div class="why-item-icon">02</div><div class="why-item-text"><h4>Satisfaction Guaranteed</h4><p>Ali doesn't leave until the job is done right and you're happy.</p></div></div>
+            <div class="why-item"><div class="why-item-icon">03</div><div class="why-item-text"><h4>All Brands &amp; Models</h4><p>From Samsung to Whirlpool — Ali services every major appliance brand.</p></div></div>
+            <div class="why-item"><div class="why-item-icon">04</div><div class="why-item-text"><h4>Transparent Pricing</h4><p>No surprise fees. You'll know the cost before any work begins.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-appliances">
+    <div class="t-section dark">
+      <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 1rem;">
+        <div class="section-label" style="justify-content:center;">What Ali Fixes</div>
+        <h2>All The Essentials</h2>
+      </div>
+      <div class="appliances-grid stagger">
+        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80" alt="Washer"/><div class="appliance-name">Washer</div></div>
+        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=400&q=80" alt="Dryer"/><div class="appliance-name">Dryer</div></div>
+        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=400&q=80" alt="Refrigerator"/><div class="appliance-name">Refrigerator</div></div>
+        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Dishwasher"/><div class="appliance-name">Dishwasher</div></div>
+        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=400&q=80" alt="Oven"/><div class="appliance-name">Oven</div></div>
+        <div class="appliance-tile"><img class="appliance-img" src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=400&q=80" alt="Freezer"/><div class="appliance-name">Freezer</div></div>
+      </div>
+      <div class="reveal" style="text-align:center;max-width:500px;margin:5rem auto 1rem;"><div class="section-label" style="justify-content:center;">Brands Ali Services</div></div>
+      <div class="brands-list stagger">
+        <div class="brand-badge">Samsung</div><div class="brand-badge">LG</div><div class="brand-badge">Whirlpool</div><div class="brand-badge">GE</div><div class="brand-badge">Maytag</div><div class="brand-badge">Bosch</div><div class="brand-badge">KitchenAid</div><div class="brand-badge">Electrolux</div><div class="brand-badge">Frigidaire</div><div class="brand-badge">Kenmore</div><div class="brand-badge">Amana</div><div class="brand-badge">Haier</div><div class="brand-badge">Speed Queen</div><div class="brand-badge">+ All Others</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-work">
+    <div class="t-section dark">
+      <div class="gallery-header reveal">
+        <div class="section-label">Real Jobs</div>
+        <h2>Work Done Right</h2>
+        <p>A look at repairs and installations Ali has completed for customers in the San Antonio area. Every job gets the same attention — no matter the appliance or the brand.</p>
+      </div>
+      <div class="gallery-grid">
+      <div class="gallery-item wide">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85" alt="Samsung Washer Repair"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Washer · Samsung</div>
+          <div class="gallery-caption">Fixed a front-load washer that wouldn't drain — replaced the pump and cleaned the filter for full performance.</div>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?w=600&q=85" alt="LG Refrigerator Repair"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Refrigerator · LG</div>
+          <div class="gallery-caption">Diagnosed a fridge that stopped cooling entirely — replaced the compressor relay and tested the full system.</div>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1604335399105-a0c585fd81a1?w=500&q=85" alt="Whirlpool Dryer Repair"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Dryer · Whirlpool</div>
+          <div class="gallery-caption">Replaced a broken heating element on a dryer that was running cold.</div>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=500&q=85" alt="Bosch Dishwasher Repair"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Dishwasher · Bosch</div>
+          <div class="gallery-caption">Fixed a dishwasher leaking onto the kitchen floor — replaced the door seal and tested thoroughly.</div>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500&q=85" alt="GE Appliance Installation"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Installation · GE</div>
+          <div class="gallery-caption">Full installation of a new stacked washer and dryer including all hookups and level check.</div>
+        </div>
+      </div>
+
+      <div class="gallery-item">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=500&q=85" alt="Maytag Washer Service"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Washer · Maytag</div>
+          <div class="gallery-caption">Washer vibrating excessively — rebalanced the drum and replaced worn suspension rods.</div>
+        </div>
+      </div>
+
+      <div class="gallery-item wide">
+        <img class="gallery-img" src="https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=900&q=85" alt="Frigidaire Freezer Repair"/>
+        <div class="gallery-overlay">
+          <div class="gallery-tag">Freezer · Frigidaire</div>
+          <div class="gallery-caption">Repaired a chest freezer with excessive frost build-up — defrosted and replaced the door gasket seal.</div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-about">
+    <div class="t-section dark">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;" class="about-grid">
+        <div class="reveal-left">
+          <div class="section-label">About Ali</div>
+          <h2>Built On Trust.<br>Backed By Results.</h2>
+          <p style="color:var(--muted);line-height:1.8;margin-top:1.5rem;margin-bottom:1.5rem;">Ali started Jaafar Appliances with a simple belief: every customer deserves honest, expert service delivered with respect. Based in San Antonio, Texas, he comes directly to your home to fix what's broken — efficiently, professionally, and at a fair price.</p>
+          <p style="color:var(--muted);line-height:1.8;margin-bottom:1.5rem;">With over 10+ years of hands-on experience and a background leading repair work at a retail appliances company, Ali brings real expertise to every job. He services all major brands and handles everything from a dryer that won't heat to a full appliance installation.</p>
+          <p style="color:var(--muted);line-height:1.8;margin-bottom:2rem;">When you call, you get Ali — not a dispatcher, not a stranger. Someone who actually cares about getting it right.</p>
+          <a href="tel:7017300184" class="btn-primary" style="display:inline-flex;">Call Ali · (701) 730-0184</a>
+        </div>
+        <div class="reveal-right" style="position:relative;">
+          <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=700&q=85" alt="Appliance technician at work" style="width:100%;height:500px;object-fit:cover;filter:grayscale(20%);"/>
+          <div style="position:absolute;bottom:-1.5rem;left:-1.5rem;background:var(--black);border:1px solid var(--gold);padding:2rem 2.5rem;animation:glow-pulse 3s ease-in-out infinite;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);line-height:1;">10+</div>
+            <div style="font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.3rem;">Years Experience</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="t-section">
+      <div style="text-align:center;max-width:700px;margin:0 auto;" class="reveal"><div class="section-label" style="justify-content:center;">What Drives Ali</div><h2>His Values</h2></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:3rem;border:1.5px solid var(--border);" class="values-grid stagger">
+        <div style="background:var(--card);padding:3rem 2.5rem;"><div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:1rem;">01</div><h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;">Honesty</h3><p style="color:var(--muted);font-size:.9rem;line-height:1.7;">Ali tells you exactly what's wrong and what it will cost — before he starts. No hidden fees, no upselling.</p></div>
+        <div style="background:var(--card);padding:3rem 2.5rem;"><div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:1rem;">02</div><h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;">Quality</h3><p style="color:var(--muted);font-size:.9rem;line-height:1.7;">Ali doesn't patch problems temporarily. Every repair is done to last, using the right parts and the right technique.</p></div>
+        <div style="background:var(--card);padding:3rem 2.5rem;"><div style="font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(201,168,76,0.15);line-height:1;margin-bottom:1rem;">03</div><h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;">Respect</h3><p style="color:var(--muted);font-size:.9rem;line-height:1.7;">Ali treats your home and your time with care. He shows up on schedule, works cleanly, and leaves your space how he found it.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-reviews">
+    <div class="t-section dark">
+      <div class="reveal"><div class="section-label">What Customers Say</div><h2>5.0 Stars on Google</h2></div>
+      <div class="reviews-grid stagger">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Ali did an excellent job! He was incredibly efficient and offered very reasonable pricing. I highly recommend his services to anyone looking for quality work at a fair price.</p>
+      <div class="review-author">Daniel Perez</div>
+      <div class="review-date">9 months ago</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">My daughter recommended this company to me, and I truly believe it was the best choice I could have made. The service was efficient and professional. I will definitely be using his services anytime I need help with any appliance.</p>
+      <div class="review-author">Ivonne Dartayet</div>
+      <div class="review-date">11 months ago</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">The technician was professional and arrived on time. He provided a clear explanation of the issue with my refrigerator and patiently answered all of my questions. I highly recommend this company.</p>
+      <div class="review-author">Ana Laura Dartayet</div>
+      <div class="review-date">11 months ago</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Ali was very helpful, kind and assertive. He went above and beyond to help me and my family. Definitely would request him again as a repair man. Great service.</p>
+      <div class="review-author">Amanda Diaz</div>
+      <div class="review-date">1 year ago</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">I would highly recommend Jaafar Appliances for service. Ali has worked on several appliances for us. He is very experienced, honest, and fairly priced for the great work that he does!</p>
+      <div class="review-author">MathMotor</div>
+      <div class="review-date">2 years ago · Local Guide</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Professional, affordable and quick service. Ali got here on time and found the issue with my refrigerator and fixed it the same day. Highly recommended.</p>
+      <div class="review-author">Yasser Jassim</div>
+      <div class="review-date">2 years ago</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Great service! Fair rates! Very timely and the technician knew his stuff! I will absolutely use this company again!</p>
+      <div class="review-author">Kiki Johnson</div>
+      <div class="review-date">1 year ago · Local Guide</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">He was very friendly and knowledgeable. He didn't try to scam me or take advantage. He's a very great guy — I highly recommend him for anything that would be needing repairs.</p>
+      <div class="review-author">Mohanad Hameed</div>
+      <div class="review-date">1 year ago</div>
+      <div class="review-platform">Google Review</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">Great service again! Fast, friendly, great diagnosis and repair!</p>
+      <div class="review-author">William Rohn</div>
+      <div class="review-date">11 months ago · Local Guide</div>
+      <div class="review-platform">Google Review</div>
+    </div></div>
+      <div style="margin-top:4rem;text-align:center;" class="reveal">
+        <p style="color:var(--muted);font-size:.9rem;margin-bottom:1.5rem;">See all reviews on Google</p>
+        <a href="https://www.google.com/search?q=jaafar+appliances+repair+reviews" target="_blank" class="btn-primary" style="display:inline-flex;">View All Google Reviews</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-panel" id="tab-contact">
+    <div class="t-section dark">
+      <div class="contact-grid">
+        <div class="reveal-left">
+          <div class="section-label">Get In Touch</div>
+          <h2>Ready To Fix It?</h2>
+          <p style="color:var(--muted);line-height:1.8;margin-top:1.2rem;margin-bottom:2.5rem;">Give Ali a call and he'll come to you. Fast response, honest pricing, and satisfaction guaranteed on every job.</p>
+          <a href="tel:7017300184" class="call-cta">
+            <div class="call-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5 19.79 19.79 0 0 1 1.61 2.87 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+            <div><div class="call-cta-label">Call Ali directly</div><div class="call-cta-num">(701) 730-0184</div></div>
+          </a>
+          <div style="margin-top:2rem;">
+            <div class="contact-item">
+              <div class="contact-item-icon"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+              <div><div class="contact-item-label">Service Area</div><div class="contact-item-value">San Antonio, TX & Surrounding Areas</div></div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+              <div><div class="contact-item-label">Rating</div><div class="contact-item-value">5.0 Stars · 14+ Google Reviews</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="reveal-right">
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;margin-bottom:.8rem;">What to Expect When You Call</h3>
+          <p style="color:var(--muted);line-height:1.8;font-size:.95rem;">Ali will ask a few quick questions about your appliance and what's happening. He'll then head out to you — usually the same day.</p>
+          <p style="color:var(--muted);line-height:1.8;font-size:.95rem;margin-top:1.2rem;">He'll diagnose the problem, give you a clear price, and get to work once you approve. No surprises, no pressure.</p>
+          <div style="margin-top:2.5rem;border:1px solid var(--border);padding:2rem;background:var(--card);">
+            <div class="section-label">Response Time</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);line-height:1;">Same Day</div>
+            <p style="color:var(--muted);font-size:.85rem;margin-top:.5rem;line-height:1.6;">In most cases Ali can come out the same day you call.</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=700&q=85" alt="Ali at work" style="width:100%;height:220px;object-fit:cover;margin-top:1.5rem;filter:grayscale(20%);"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Jaafar<span>.</span> Appliances</div>
+  <div class="footer-copy">© 2025–2026 Jaafar Appliances · San Antonio, TX</div>
+  <ul class="footer-links">
+    <li><a href="#" onclick="switchTab('services',event)">Services</a></li>
+    <li><a href="#" onclick="switchTab('work',event)">Our Work</a></li>
+    <li><a href="#" onclick="switchTab('contact',event)">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function a(){cursor.style.left=mx+'px';cursor.style.top=my+'px';rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.service-card,.appliance-tile,.brand-badge,.gallery-item,.why-item,.review-card,.contact-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='16px';cursor.style.height='16px';ring.style.width='52px';ring.style.height='52px';});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='36px';ring.style.height='36px';});
+});
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);});
+const observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target);}});},{threshold:0.1});
+function switchTab(name,e){
+  if(e)e.preventDefault();
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id==='tab-'+name));
+  document.querySelector('.tab-nav').scrollIntoView({behavior:'smooth',block:'nearest'});
+  setTimeout(()=>{document.querySelectorAll('#tab-'+name+' .reveal,#tab-'+name+' .reveal-left,#tab-'+name+' .reveal-right,#tab-'+name+' .stagger').forEach(el=>{el.classList.remove('visible');observer.observe(el);});},50);
+}
+window.switchTab=switchTab;
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
