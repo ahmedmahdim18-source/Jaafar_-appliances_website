@@ -196,7 +196,7 @@ h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-h
 .service-card:hover::before{opacity:1;}
 .service-card:hover::after{transform:scaleX(1);}
 .service-card:hover{transform:translateY(-4px);}
-.service-photo{width:100%;height:160px;object-fit:cover;margin-bottom:1.8rem;filter:grayscale(30%);transition:filter .4s;}
+.service-photo{width:100%;height:200px;object-fit:cover;object-position:center center;margin-bottom:1.8rem;filter:grayscale(30%);transition:filter .4s;display:block;}
 .service-card:hover .service-photo{filter:grayscale(0%);}
 .service-num{position:absolute;top:2rem;right:2.5rem;font-family:'Bebas Neue',sans-serif;font-size:4rem;color:rgba(255,255,255,0.04);line-height:1;}
 .service-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:1rem;}
@@ -222,7 +222,7 @@ h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-h
 .appliance-tile{background:var(--card);padding:0;text-align:center;overflow:hidden;position:relative;}
 .appliance-tile::before{content:'';position:absolute;inset:0;background:var(--gold-glow);opacity:0;transition:opacity .3s;z-index:1;}
 .appliance-tile:hover::before{opacity:1;}
-.appliance-img{width:100%;height:140px;object-fit:cover;display:block;filter:grayscale(40%) brightness(0.7);transition:filter .4s,transform .4s;}
+.appliance-img{width:100%;height:140px;object-fit:cover;object-position:center center;display:block;filter:grayscale(40%) brightness(0.7);transition:filter .4s,transform .4s;}
 .appliance-tile:hover .appliance-img{filter:grayscale(0%) brightness(0.9);transform:scale(1.05);}
 .appliance-name{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:.9rem .5rem;transition:color .3s;position:relative;z-index:2;}
 .appliance-tile:hover .appliance-name{color:var(--gold);}
@@ -234,7 +234,7 @@ h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);line-h
 .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
 .gallery-item{position:relative;overflow:hidden;aspect-ratio:4/3;}
 .gallery-item.wide{grid-column:span 2;}
-.gallery-img{width:100%;height:100%;object-fit:cover;display:block;filter:grayscale(20%);transition:transform .6s cubic-bezier(.22,1,.36,1),filter .4s;}
+.gallery-img{width:100%;height:100%;object-fit:cover;object-position:center center;display:block;filter:grayscale(20%);transition:transform .6s cubic-bezier(.22,1,.36,1),filter .4s;}
 .gallery-item:hover .gallery-img{transform:scale(1.06);filter:grayscale(0%);}
 .gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.92) 0%,rgba(8,8,8,0.4) 50%,transparent 100%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;}
 .gallery-item:hover .gallery-overlay{opacity:1;}
