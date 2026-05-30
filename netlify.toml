@@ -2,10 +2,7 @@
   publish = "public"
   command = "node build.js"
 
-[[redirects]]
-  from = "/admin"
-  to = "/admin/index.html"
-  status = 200
+# No redirect needed — admin folder is copied into public by build.js
 
 [[headers]]
   for = "/admin/*"

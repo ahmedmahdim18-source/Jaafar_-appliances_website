@@ -521,3 +521,20 @@ document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger').forEach
 if (!fs.existsSync('public')) fs.mkdirSync('public', { recursive: true });
 fs.writeFileSync('public/index.html', html);
 console.log('✅ Site built successfully → public/index.html');
+
+// ── Copy admin panel into public so Netlify serves it at /admin ───────────
+function copyDirSync(src, dest) {
+  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+  fs.readdirSync(src).forEach(file => {
+    const srcPath  = path.join(src,  file);
+    const destPath = path.join(dest, file);
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyDirSync(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  });
+}
+
+copyDirSync('admin', 'public/admin');
+console.log('✅ Admin panel copied → public/admin/');
